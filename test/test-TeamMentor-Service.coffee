@@ -18,6 +18,7 @@ describe 'test-TeamMentor-Service |', ->
       teamMentorService.tmServer       .assert_Is 'https://uno.teammentor.net'
 
     it 'tmServerVersion', (done)->
+      @timeout(20000)                                       # give target TM time to wake up
       teamMentorService.tmServerVersion.assert_Is_Function()
       teamMentorService.tmServerVersion (version)->
         version.assert_Is('3.5.0.0')
