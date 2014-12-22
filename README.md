@@ -7,7 +7,7 @@ node-teammentor &nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/TeamMen
 
 TEAM Mentor nodeJS API
 
-Install using 
+###Install
 
 ```
 npm install teammentor --save
