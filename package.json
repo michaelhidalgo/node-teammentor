@@ -19,5 +19,17 @@
   "bugs": {
     "url": "https://github.com/TeamMentor/node-teammentor/issues"
   },
-  "homepage": "https://github.com/TeamMentor/node-teammentor"
+  "homepage": "https://github.com/TeamMentor/node-teammentor",
+  "dependencies": {
+    "coffee-script": "^1.8.0",
+    "fluentnode": "^0.2.2"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "cheerio": "^0.18.0",
+    "github": "^0.2.3",
+    "mocha": "^2.0.1",
+    "request": "^2.51.0",
+    "xml2js": "^0.4.4"
+  }
 }
