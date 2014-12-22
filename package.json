@@ -1,0 +1,23 @@
+{
+  "name": "teammentor",
+  "version": "0.0.1",
+  "description": "TEAM Mentor nodeJS API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeamMentor/node-teammentor.git"
+  },
+  "keywords": [
+    "TEAM",
+    "mentor"
+  ],
+  "author": "Dinis Cruz <dinis.cruz@owasp.org> (http://blog.diniscruz.com/)",
+  "license": "TeamMentor Commercial License",
+  "bugs": {
+    "url": "https://github.com/TeamMentor/node-teammentor/issues"
+  },
+  "homepage": "https://github.com/TeamMentor/node-teammentor"
+}
