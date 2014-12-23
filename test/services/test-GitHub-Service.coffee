@@ -1,5 +1,5 @@
 require ('fluentnode')
-GitHub_Service = require('../src/GitHub-Service')
+GitHub_Service = require('../../src/services/GitHub-Service')
 expect         = require('chai').expect
 
 describe 'services | test-GitHub-Service |', ->

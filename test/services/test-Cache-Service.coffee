@@ -1,5 +1,5 @@
 require 'fluentnode'
-Cache_Service = require('../src/Cache-Service')
+Cache_Service = require('../../src/services/Cache-Service')
 expect        = require('chai').expect
 cheerio       = require('cheerio')
 
