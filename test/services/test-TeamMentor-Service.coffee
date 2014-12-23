@@ -1,32 +1,34 @@
 TeamMentor_Service   = require('../../src/services/TeamMentor-Service')
 
-describe 'services | test-TeamMentor-Service |', ->
+describe.only 'services | test-TeamMentor-Service |', ->
 
   describe 'core',->
-    teamMentorService = new TeamMentor_Service()
+    teamMentor = new TeamMentor_Service()
 
     it 'check ctor', ->
       TeamMentor_Service.assert_Is_Function()
+      using teamMentor,->
+        @.name        .assert_Is_String()
+        @.tmServer    .assert_Is_String()
+        @.cacheService.assert_Is_Object()
+        @.asmx        .assert_Is_Object()
 
-      teamMentorService.name        .assert_Is_String()
-      teamMentorService.tmServer    .assert_Is_String()
-      teamMentorService.cacheService.assert_Is_Object()
-      teamMentorService.asmx        .assert_Is_Object()
+        @.name        .assert_Is '_tm_data'
+        @.name        .assert_Is teamMentor.cacheService.area
+        @.tmServer    .assert_Is 'https://tmdev01-uno.teammentor.net'
+        @.tm_User     .assert_Is_Object()
 
-      teamMentorService.name           .assert_Is '_tm_data'
-      teamMentorService.name           .assert_Is teamMentorService.cacheService.area
-      teamMentorService.tmServer       .assert_Is 'https://uno.teammentor.net'
 
     it 'tmServerVersion', (done)->
       @timeout(20000)                                       # give target TM time to wake up
-      teamMentorService.tmServerVersion.assert_Is_Function()
-      teamMentorService.tmServerVersion (version)->
+      teamMentor.tmServerVersion.assert_Is_Function()
+      teamMentor.tmServerVersion (version)->
         version.assert_Is('3.5.0.0')
         done()
 
     it 'libraries', (done)->
-      teamMentorService.libraries.assert_Is_Function()
-      teamMentorService.libraries (libraries)->
+      teamMentor.libraries.assert_Is_Function()
+      teamMentor.libraries (libraries)->
         libraries.assert_Is_Object();
         Object.keys(libraries).assert_Size_Is(2)
         libraries['Guidance']     .assert_Is_Object()
@@ -34,25 +36,31 @@ describe 'services | test-TeamMentor-Service |', ->
         done()
 
     it 'library', (done)->
-      teamMentorService.library.assert_Is_Function()
-      teamMentorService.library 'Guidance', (library)->
+      teamMentor.library.assert_Is_Function()
+      teamMentor.library 'Guidance', (library)->
         library.assert_Is_Object()
         library.name = 'Guidance'
         done()
 
     it 'article', (done)->
       article_Guid = '6cdd9588-3483-4054-8bb7-17f790dedf10'
-      teamMentorService.article.assert_Is_Function()
-      teamMentorService.article article_Guid, (article)->
+      teamMentor.article.assert_Is_Function()
+      teamMentor.article article_Guid, (article)->
         article.assert_Is_Object()
         article.Metadata      .assert_Is_Object()
         article.Metadata.Id   .assert_Is(article_Guid)
         article.Metadata.Title.assert_Is('Constrain, Reject, And Sanitize Input')
         done()
 
-    it 'login (good pwd)', (done)->
-      teamMentorService.login_Rest "graph123","aaaaaa", (data)->
+    it 'login_Rest (bad pwd)', (done)->
+      teamMentor.login_Rest "graph123","aaaaaa", (data)->
         data.assert_Is('00000000-0000-0000-0000-000000000000')
+        done()
+
+    it 'whoami', (done)->
+      teamMentor.whoami (data)->
+        data.assert_Is_Object()
+        data.UserName.assert_Is('tm4bot')
         done()
 
   describe 'asmx',->

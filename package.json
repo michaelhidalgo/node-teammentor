@@ -22,7 +22,7 @@
   "homepage": "https://github.com/TeamMentor/node-teammentor",
   "dependencies": {
     "coffee-script": "^1.8.0",
-    "fluentnode": "^0.2.2",
+    "fluentnode": "*",
     "jade": "^1.8.2",
     "node-uuid": "^1.4.2"
   },

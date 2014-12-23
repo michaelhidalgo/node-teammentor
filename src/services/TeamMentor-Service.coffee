@@ -6,8 +6,12 @@ class TeamMentor_Service
     @name         = name || '_tm_data'
     @cacheService = new Cache_Service(@name)
     #@tmServer     = 'https://tmdev01-sme.teammentor.net'
-    @tmServer     = 'https://uno.teammentor.net'
+    @tmServer     = 'https://tmdev01-uno.teammentor.net'
     @asmx         = new TeamMentor_ASMX(@)
+    @tm_User      = {username:'tm4bot', token:'4d2e6b15-cae6-4fee-a63c-d34361d7d1d1'}
+
+  auth_Param: ()=>
+    "?auth=#{@tm_User.token}"
 
   tmServerVersion: (callback)->
     url = @tmServer + '/rest/version'
@@ -29,7 +33,7 @@ class TeamMentor_Service
     if not guid
       callback null
     else
-      url = @tmServer + "/jsonp/#{guid}"
+      url = @tmServer + "/jsonp/#{guid}" + @auth_Param()
       @cacheService.json_GET url, (article)->
         callback article
 
@@ -37,6 +41,10 @@ class TeamMentor_Service
     url = @tmServer + "/rest/login/#{username}/#{password}"
     @cacheService.json_GET url, (article)->
       callback article
+
+  whoami: (callback)=>
+    url = @tmServer + "/whoami" + @auth_Param()
+    url.json_GET callback
 
 
 class TeamMentor_ASMX
