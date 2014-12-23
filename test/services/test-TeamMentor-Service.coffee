@@ -1,6 +1,6 @@
 TeamMentor_Service   = require('../../src/services/TeamMentor-Service')
 
-describe.only 'services | test-TeamMentor-Service |', ->
+describe 'services | test-TeamMentor-Service |', ->
 
   describe 'core',->
     teamMentor = new TeamMentor_Service()
