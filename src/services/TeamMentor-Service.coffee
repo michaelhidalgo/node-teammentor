@@ -1,17 +1,28 @@
+require 'fluentnode'
+
 Cache_Service  = require('./Cache-Service')
 xml2js         = require('xml2js');
 
 class TeamMentor_Service
-  constructor: (name)->
-    @name         = name || '_tm_data'
-    @cacheService = new Cache_Service(@name)
-    #@tmServer     = 'https://tmdev01-sme.teammentor.net'
-    @tmServer     = 'https://tmdev01-uno.teammentor.net'
-    @asmx         = new TeamMentor_ASMX(@)
-    @tm_User      = {username:'tm4bot', token:'4d2e6b15-cae6-4fee-a63c-d34361d7d1d1'}
+  constructor: (options)->
+    @options        = options || {}
+    @name           = @options.name || '_tm_data'
+    @cacheService   = new Cache_Service(@name)
+    @tmServer       = @options.tmServer || 'https://tmdev01-uno.teammentor.net'
+    @asmx           = new TeamMentor_ASMX(@)
+    @tmConfig_File  = @options.tmConfig_File || null
+    @tmConfig       = null
+    @load_TM_Config()
+
+  load_TM_Config: ()=>
+    if (global.file_Exists(@tmConfig_File))
+      @tmConfig = @tmConfig_File.load_Json()
+    else
+      @tmConfig = { tm_User : { username: '', token: ''} }
+    @
 
   auth_Param: ()=>
-    "?auth=#{@tm_User.token}"
+    "?auth=#{@tmConfig.tm_User.token}"
 
   tmServerVersion: (callback)->
     url = @tmServer + '/rest/version'
@@ -45,6 +56,7 @@ class TeamMentor_Service
   whoami: (callback)=>
     url = @tmServer + "/whoami" + @auth_Param()
     url.json_GET callback
+
 
 
 class TeamMentor_ASMX
