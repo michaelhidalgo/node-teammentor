@@ -4,7 +4,9 @@
   "description": "TEAM Mentor nodeJS API",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register --recursive -R list"
+    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register --recursive -R list",
+    "coverage": "./bin/local-code-coverage.sh",
+    "coverage-publish": "./bin/coveralls-code-coverage.sh"
   },
   "repository": {
     "type": "git",
@@ -29,8 +31,12 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "cheerio": "^0.18.0",
+    "coveralls": "^2.11.2",
     "github": "^0.2.3",
+    "html-file-cov": "0.0.1",
+    "jscover": "^0.2.4",
     "mocha": "^2.0.1",
+    "mocha-lcov-reporter": "0.0.1",
     "request": "^2.51.0",
     "xml2js": "^0.4.4"
   }
