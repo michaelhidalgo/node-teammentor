@@ -87,7 +87,7 @@ describe 'services | test-TeamMentor-Service |', ->
     teamMentor    = null
 
     return if (tmConfig_File.file_Not_Exists())
-            
+
     before ->
       teamMentor = new TeamMentor_Service({tmConfig_File : tmConfig_File})
 
