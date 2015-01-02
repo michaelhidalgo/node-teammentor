@@ -71,9 +71,9 @@ class CacheService
     json_GET: (url, callback)->
       key = "json_get_#{url}"
       if @has_Key(key)
-        response = JSON.parse(@get(key))
-        json     = response.body
-        callback json, response
+        response = JSON.parse(@get(key))           #
+        json     = response.body                   #
+        callback json, response                    #
       else
         "[CacheService][json_GET] downloading: #{url}".log()
         options = { url: url , json: true }
