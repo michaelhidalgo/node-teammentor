@@ -86,8 +86,9 @@ describe 'services | test-TeamMentor-Service |', ->
     tmConfig_File = '.tm-Config.json'.append_To_Process_Cwd_Path()
     teamMentor    = null
 
+    return if (tmConfig_File.file_Not_Exists())
+            
     before ->
-      tmConfig_File.assert_File_Exists()
       teamMentor = new TeamMentor_Service({tmConfig_File : tmConfig_File})
 
     it 'article', (done)->
