@@ -26,6 +26,14 @@ describe 'services | test-GitHub-Service |', ->
     expect(gitHubService.enableCache()).to.equal(gitHubService)
     expect(gitHubService.useCache).to.be.true
 
+  it 'cacheService (when cache disabled)', (done)->
+      using new GitHub_Service(),->
+        @useCache.assert_Is_False()
+        @cacheService null,
+                      (data)-> data.assert_Is({a:24}); done(),   #main_callback
+                      (next)-> next({a:24})                      #noData_callback
+
+
   it 'authenticate',->
     expect(gitHubService.authenticate  ).to.be.an('Function')
     expect(gitHubService.authenticate()).to.equal(gitHubService)
@@ -60,6 +68,14 @@ describe 'services | test-GitHub-Service |', ->
         expect(files).to.contain('Search_Input_Validation.json')
         done()
 
+  it 'gist_Raw (bad gistOd)', (done)->
+    expect(gitHubService.gist  ).to.be.an('Function')
+    gistId = "ad328585205f67569e0d_AAAA"
+
+    gitHubService.gist_Raw gistId, (data)->
+      assert_Is_Null(data)
+      done()
+
   it 'gist', (done)->
     expect(gitHubService.gist  ).to.be.an('Function')
     gistId = "ad328585205f67569e0d"
@@ -71,7 +87,30 @@ describe 'services | test-GitHub-Service |', ->
 
       expect(searchData      ).to.be.an('Object')
       expect(searchData.title).to.equal('Data Validation')
+
+      #check that value is in cache
+      gitHubService.gist gistId, file, (data_fromCache)->
+        data.assert_Is(data_fromCache)
+        done()
+
+  it 'gist (bad file)', (done)->
+    expect(gitHubService.gist  ).to.be.an('Function')
+    gistId = "ad328585205f67569e0d"
+    file   = 'Search_Data_Validation_AAAA.json'
+
+    gitHubService.gist gistId, file, (data)->
+      assert_Is_Null(data)
       done()
+
+  it 'gist (bad gistId)', (done)->
+    expect(gitHubService.gist  ).to.be.an('Function')
+    gistId = "ad328585205f67569e0d_AAAA"
+    file   = 'Search_Data_Validation.json'
+
+    gitHubService.gist gistId, file, (data)->
+      assert_Is_Null(data)
+      done()
+
 
   it 'repo_Raw', (done)->
     expect(gitHubService.repo_Raw).to.be.an('Function')

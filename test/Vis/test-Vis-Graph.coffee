@@ -49,6 +49,7 @@ describe 'Vis | test-Vis_Graph |', ->
     node.box  .assert_Is_Function()
     node._color.assert_Is_Function()
     node._shape.assert_Is_Function()
+    assert_Is_Null(Vis_Graph.new().node('asd'))
 
   it 'nodes_By_Id',->
     visGraph = Vis_Graph.ctor()

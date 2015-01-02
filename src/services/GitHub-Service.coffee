@@ -45,17 +45,18 @@ class GitHubService
     gist_Raw: (id, callback)->
       @cacheService 'gist_Raw_'.append(id), callback, (cache_callback) =>
         @github.gists.get  id : id, (err, res)->
-          throw err if err
-          cache_callback(res)
+          if err
+            callback(null)
+          else
+            cache_callback(res)
             
     gist: (id, file, callback)->
       @cacheService "gist_#{id}_#{file}", callback, (cache_callback) =>
         @github.gists.get  id : id, (err, res)->
-          throw err if err
-          if (file in Object.keys(res.files))
-            cache_callback(res.files[file])
-          else
+          if err or res.files.keys().not_Contains(file)
             cache_callback(null)
+          else
+            cache_callback(res.files[file])
 
     repo_Raw: (user,repo, callback)->
       @cacheService "repo_Raw_#{user}_#{repo}", callback, (cache_callback) =>

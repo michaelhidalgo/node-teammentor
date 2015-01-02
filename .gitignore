@@ -29,3 +29,4 @@ node_modules
 .idea
 .tmCache
 .tm-Config.json
+.coverage

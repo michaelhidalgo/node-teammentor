@@ -35,7 +35,8 @@ describe 'Vis | Vis-Node',->
   it '_fontSize' ,-> visNode._fontSize('12' ).fontSize.assert_Is('12' )
   it '_label'    ,-> visNode._label(   'dfg').label   .assert_Is('dfg')
   it '_shape'    ,-> visNode._shape(   'hij').shape   .assert_Is('hij')
-  it '_title'    ,-> visNode._shape(   'klm').shape   .assert_Is('klm')
+  it '_title'    ,-> visNode._title(   'klm').title   .assert_Is('klm')
+
 
   #colors
   colors = ['black','blue','green','red','white']

@@ -6,17 +6,15 @@ rm -R .tmCache
 
 echo 'Creating instrumented node files'
 echo '    for CoffeeScript'
-coffeeCoverage --path relative ./src ./_coverage/src
-coffeeCoverage --path relative ./test ./_coverage/test
+coffeeCoverage --path relative ./src ./.coverage/src
+coffeeCoverage --path relative ./test ./.coverage/test
 
 echo 'Running Tests locally with (html-file-cov)'
-mocha -R mocha-lcov-reporter _coverage/test --recursive | sed 's,SF:,SF:src/,;/test/s,src,test,' | ./node_modules/coveralls/bin/coveralls.js
+mocha -R mocha-lcov-reporter .coverage/test --recursive | sed 's,SF:,SF:src/,;/test/s,src,test,' | ./node_modules/coveralls/bin/coveralls.js
 
 echo 'Removing instrumented node files'
-rm -R _coverage
-rm -R src-cov
-mv coverage.html .tmCache/coverage.html
+rm -R .coverage
 
 echo 'Opening browser with coverage.html'
 
-open https://coveralls.io/r/TeamMentor/node-teammentor
+#open https://coveralls.io/r/TeamMentor/node-teammentor

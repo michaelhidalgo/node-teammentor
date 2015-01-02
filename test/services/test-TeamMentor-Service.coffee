@@ -49,9 +49,9 @@ describe 'services | test-TeamMentor-Service |', ->
           tmpConfigFile.file_Delete().assert_True()
 
     it 'load_TM_Config', (done)->
-      #"./tmConfig.json"
       teamMentor.load_TM_Config()
       done();
+
     it 'tmServerVersion', (done)->
       @timeout(20000)                                       # give target TM time to wake up
       teamMentor.tmServerVersion.assert_Is_Function()
@@ -86,10 +86,8 @@ describe 'services | test-TeamMentor-Service |', ->
     tmConfig_File = '.tm-Config.json'.append_To_Process_Cwd_Path()
     teamMentor    = null
 
-    if tmConfig_File.file_Not_Exists()
-      return
-
     before ->
+      tmConfig_File.assert_File_Exists()
       teamMentor = new TeamMentor_Service({tmConfig_File : tmConfig_File})
 
     it 'article', (done)->
@@ -100,6 +98,11 @@ describe 'services | test-TeamMentor-Service |', ->
         article.Metadata      .assert_Is_Object()
         article.Metadata.Id   .assert_Is(article_Guid)
         article.Metadata.Title.assert_Is('Constrain, Reject, And Sanitize Input')
+        done()
+
+    it 'article (null)', (done)->
+      teamMentor.article null, (result)->
+        assert_Is_Null(result)
         done()
 
     it 'whoami', (done)->
@@ -116,6 +119,7 @@ describe 'services | test-TeamMentor-Service |', ->
     before ->
       teamMentorService = new TeamMentor_Service()
       asmx              = teamMentorService.asmx
+
     it '.ctor', ->
       asmx.teamMentor  .assert_Is_Equal_To(teamMentorService)
       asmx.asmx_BaseUrl.assert_Is_Equal_To(teamMentorService.tmServer + '/Aspx_Pages/TM_WebServices.asmx/')
