@@ -10,7 +10,7 @@ coffeeCoverage --path relative ./src ./_coverage/src
 coffeeCoverage --path relative ./test ./_coverage/test
 
 echo 'Running Tests locally with (html-file-cov)'
-mocha -R mocha-lcov-reporter _coverage/test --recursive | sed 's,SF:,SF:src/,' | sed s',SF.*test.*,SF:test//&,' | sed s',/SF:,,' | sed s',test/src,test,' | ./node_modules/coveralls/bin/coveralls.js
+mocha -R mocha-lcov-reporter _coverage/test --recursive | sed 's,SF:,SF:src/,;/test/s,src,test,' | ./node_modules/coveralls/bin/coveralls.js
 
 echo 'Removing instrumented node files'
 rm -R _coverage
