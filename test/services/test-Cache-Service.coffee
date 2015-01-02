@@ -96,7 +96,7 @@ describe 'services | test-Cache-Service |', ->
 
         cacheService.http_GET 'http://www.google.co.uk/aaa', (data_From_Cache, response_From_Cache)->
           data.assert_Is(data_From_Cache)
-          response.assert_Is(response_From_Cache)
+          response.body.assert_Is(response_From_Cache.body)
           done()
 
     it 'json_GET', (done)->
@@ -109,7 +109,7 @@ describe 'services | test-Cache-Service |', ->
         response.request.method             .assert_Is('GET')
         cacheService.json_GET 'https://github.com/status.json', (json_From_Cache, response_From_Cache)->
           json.assert_Is(json_From_Cache)
-          response.assert_Is(response_From_Cache)
+          response.body.assert_Is(response_From_Cache.body)
           done()
 
     it 'json_POST', (done)->
