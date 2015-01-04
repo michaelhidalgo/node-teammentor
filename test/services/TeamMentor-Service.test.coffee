@@ -88,7 +88,7 @@ describe 'services | test-TeamMentor-Service |', ->
 
     return if (tmConfig_File.file_Not_Exists())
 
-    @timeout(15000)  # to give time for TM 3.5 to wake up
+    @timeout(10000)  # in case the .NET server needs to wake up
 
     before ->
       teamMentor = new TeamMentor_Service({tmConfig_File : tmConfig_File})
@@ -103,11 +103,6 @@ describe 'services | test-TeamMentor-Service |', ->
         article.Metadata.Title.assert_Is('Constrain, Reject, And Sanitize Input')
         done()
 
-    it 'article (null)', (done)->
-      teamMentor.article null, (result)->
-        assert_Is_Null(result)
-        done()
-
     it 'whoami', (done)->
       teamMentor.whoami (data)->
         data.assert_Is_Object()
@@ -116,16 +111,16 @@ describe 'services | test-TeamMentor-Service |', ->
 
   describe 'asmx',->
 
-    teamMentorService = null
+    teamMentor = null
     asmx              = null
 
     before ->
-      teamMentorService = new TeamMentor_Service()
-      asmx              = teamMentorService.asmx
+      teamMentor = new TeamMentor_Service()
+      asmx              = teamMentor.asmx
 
     it '.ctor', ->
-      asmx.teamMentor  .assert_Is_Equal_To(teamMentorService)
-      asmx.asmx_BaseUrl.assert_Is_Equal_To(teamMentorService.tmServer + '/Aspx_Pages/TM_WebServices.asmx/')
+      asmx.teamMentor  .assert_Is_Equal_To(teamMentor)
+      asmx.asmx_BaseUrl.assert_Is_Equal_To(teamMentor.tmServer + '/Aspx_Pages/TM_WebServices.asmx/')
 
     it '_json_Post', (done)->
       @timeout 10000        # in case the .NET server needs to wake up
@@ -134,7 +129,12 @@ describe 'services | test-TeamMentor-Service |', ->
         #console.log response
         response.d.assert_Contains('received ping: ')
         done()
-
+    
+    it 'article (null)', (done)->
+      teamMentor.article null, (result)->
+        assert_Is_Null(result)
+        done()
+        
     it 'ping', (done)->
       value = (5).random_Letters()
       asmx.ping '', (data)->
@@ -158,4 +158,9 @@ describe 'services | test-TeamMentor-Service |', ->
         data.assert_Is('00000000-0000-0000-0000-000000000000')
         done()
 
+    it 'whoami', (done)->
+      teamMentor.whoami (data)->
+        data.assert_Is_Object()
+        data.UserName.assert_Is('')
+        done()
 
