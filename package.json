@@ -26,19 +26,15 @@
   "dependencies": {
     "coffee-script": "^1.8.0",
     "fluentnode": "*",
+    "github": "^0.2.3",
     "jade": "^1.8.2",
-    "node-uuid": "^1.4.2"
+    "node-uuid": "^1.4.2",
+    "request": "^2.51.0",
+    "xml2js": "^0.4.4"
   },
   "devDependencies": {
     "chai": "^1.10.0",
     "cheerio": "^0.18.0",
-    "coveralls": "^2.11.2",
-    "github": "^0.2.3",
-    "html-file-cov": "0.0.1",
-    "jscover": "^0.2.4",
-    "mocha": "^2.0.1",
-    "mocha-lcov-reporter": "0.0.1",
-    "request": "^2.51.0",
-    "xml2js": "^0.4.4"
+    "mocha": "^2.0.1"
   }
 }
