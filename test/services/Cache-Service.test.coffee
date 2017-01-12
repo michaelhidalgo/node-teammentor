@@ -114,13 +114,13 @@ describe 'services | test-Cache-Service |', ->
           done()
 
     it 'json_POST', (done)->
-      cacheService.json_POST 'https://www36.teammentor.net/Aspx_Pages/TM_WebServices.asmx/Ping', {message: 'a'}, (json, response)->
+      cacheService.json_POST 'https://beta36.teammentor.net/Aspx_Pages/TM_WebServices.asmx/Ping', {message: 'a'}, (json, response)->
 
         (typeof(json)    )                  .assert_Is_Equal_To("object")
         (typeof(response))                  .assert_Is_Equal_To("object")
         json.d                              .assert_Is('received ping: a')
         response.headers['x-xss-protection'].assert_Is('1; mode=block')
-        response.request.uri.hostname       .assert_Is('www36.teammentor.net')
+        response.request.uri.hostname       .assert_Is('beta36.teammentor.net')
         response.request.method             .assert_Is('POST')
 
         done()
