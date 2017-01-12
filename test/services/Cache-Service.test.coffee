@@ -90,7 +90,8 @@ describe 'services | test-Cache-Service |', ->
         $('title')                          .assert_Is_Object()
         $('title').html()                   .assert_Is('Error 404 (Not Found)!!1')
         response.statusCode.str()           .assert_Is('404')
-        response.headers['x-xss-protection'].assert_Is('1; mode=block')
+        response.headers['content-type']    .assert_Is('text/html; charset=UTF-8')
+        response.headers['content-length']  .assert_Is_Number
         response.request.uri.hostname       .assert_Is('www.google.co.uk')
         response.body                       .assert_Is(data)
 
@@ -113,12 +114,13 @@ describe 'services | test-Cache-Service |', ->
           done()
 
     it 'json_POST', (done)->
-      cacheService.json_POST 'https://teammentor.net/Aspx_Pages/TM_WebServices.asmx/Ping', {message: 'a'}, (json, response)->
+      cacheService.json_POST 'https://www36.teammentor.net/Aspx_Pages/TM_WebServices.asmx/Ping', {message: 'a'}, (json, response)->
+
         (typeof(json)    )                  .assert_Is_Equal_To("object")
         (typeof(response))                  .assert_Is_Equal_To("object")
         json.d                              .assert_Is('received ping: a')
         response.headers['x-xss-protection'].assert_Is('1; mode=block')
-        response.request.uri.hostname       .assert_Is('teammentor.net')
+        response.request.uri.hostname       .assert_Is('www36.teammentor.net')
         response.request.method             .assert_Is('POST')
 
         done()

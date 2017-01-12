@@ -47,6 +47,7 @@ describe 'services | test-GitHub-Service |', ->
 
   it 'rateLimit', (done)->
     expect(gitHubService.rateLimit  ).to.be.an('Function')
+
     gitHubService.rateLimit (data)->
         expect(data                     ).to.be.an('Object')
         expect(data.resources           ).to.be.an('Object')
@@ -62,10 +63,10 @@ describe 'services | test-GitHub-Service |', ->
     gistId = "ad328585205f67569e0d"
     gitHubService.gist_Raw gistId, (data)->
         expect(data                     ).to.be.an('Object')
-        files = Object.keys(data.files)
-        expect(files).to.be.an("Array")
-        expect(files).to.contain('Search_Data_Validation.json' )
-        expect(files).to.contain('Search_Input_Validation.json')
+        files = data.files
+        expect(files).to.be.an("Object")
+        expect(files).to.have.property(('Search_Data_Validation.json'))
+        expect(files).to.have.property(('Search_Input_Validation.json'))
         done()
 
   it 'gist_Raw (bad gistOd)', (done)->

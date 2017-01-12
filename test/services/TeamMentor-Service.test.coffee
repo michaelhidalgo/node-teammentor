@@ -20,7 +20,7 @@ describe 'services | test-TeamMentor-Service |', ->
 
         @.name          .assert_Is '_tm_data'
         @.name          .assert_Is teamMentor.cacheService.area
-        @.tmServer      .assert_Is 'https://tmdev01-uno.teammentor.net'
+        @.tmServer      .assert_Is 'https://beta36.teammentor.net'
         @.tmConfig      .assert_Is_Object()
         assert_Is_Null(@.tmConfig_File)
 

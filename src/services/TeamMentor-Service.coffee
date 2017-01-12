@@ -8,7 +8,7 @@ class TeamMentor_Service
     @options        = options || {}
     @name           = @options.name || '_tm_data'
     @cacheService   = new Cache_Service(@name)
-    @tmServer       = @options.tmServer || 'https://tmdev01-uno.teammentor.net'
+    @tmServer       = @options.tmServer || 'https://beta36.teammentor.net'
     @asmx           = new TeamMentor_ASMX(@)
     @tmConfig_File  = @options.tmConfig_File || null
     @tmConfig       = null

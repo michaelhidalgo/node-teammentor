@@ -38,7 +38,7 @@ class GitHubService
 
     rateLimit: (callback)=>
         @cacheService 'rateLimit', callback, (cache_callback) =>
-          @github.misc.rateLimit {}, (err,res)=>
+          @github.misc.getRateLimit {}, (err,res)=>
             throw err if err
             cache_callback(res)
         
@@ -53,28 +53,28 @@ class GitHubService
     gist: (id, file, callback)->
       @cacheService "gist_#{id}_#{file}", callback, (cache_callback) =>
         @github.gists.get  id : id, (err, res)->
-          if err or res.files.keys().not_Contains(file)
+          if err or res.files.keys_Own().not_Contains(file)
             cache_callback(null)
           else
             cache_callback(res.files[file])
 
     repo_Raw: (user,repo, callback)->
       @cacheService "repo_Raw_#{user}_#{repo}", callback, (cache_callback) =>
-        @github.repos.get  user : user, repo: repo, (err, res)->
+        @github.repos.get  user : user, owner: user, repo: repo, (err, res)->
           throw err if err
           cache_callback(res)
             
     tree_Raw: (user,repo, sha, callback)->
       recursive = true
       @cacheService "tree_Raw_#{user}_#{repo}_#{sha}_#{recursive}", callback, (cache_callback) =>
-        @github.gitdata.getTree  user : user, repo: repo, sha: sha, recursive : recursive, (err, res)->
+        @github.gitdata.getTree  user : user, owner:user, repo: repo, sha: sha, recursive : recursive, (err, res)->
           throw err if err
           cache_callback(res)
     
     file: (user,repo, path, callback)->
       path_safe = path.replace('/','_')
       @cacheService "file_#{user}_#{repo}_#{path_safe}", callback, (cache_callback) =>
-        @github.repos.getContent  user : user, repo: repo, path: path, (err, res)->
+        @github.repos.getContent  user : user, owner:user, repo: repo, path: path, (err, res)->
           throw err if err
           asciiContent = new Buffer(res.content, 'base64').toString('ascii')
           cache_callback(asciiContent)

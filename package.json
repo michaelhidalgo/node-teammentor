@@ -26,15 +26,15 @@
   "dependencies": {
     "coffee-script": "^1.8.0",
     "fluentnode": "*",
-    "github": "^0.2.3",
+    "github": "^7.3.2",
     "jade": "^1.8.2",
-    "node-uuid": "^1.4.2",
     "request": "^2.51.0",
+    "uuid": "^3.0.1",
     "xml2js": "^0.4.4"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "cheerio": "^0.18.0",
-    "mocha": "^2.0.1"
+    "chai": "^3.5.0",
+    "cheerio": "^0.22.0",
+    "mocha": "^3.2.0"
   }
 }
